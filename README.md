@@ -1,5 +1,11 @@
 # token-diagnostics
 
+![Status](https://img.shields.io/badge/status-active-16a34a)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-7c3aed)
+![Token Diagnostics](https://img.shields.io/badge/focus-token%20diagnostics-111827)
+![Safe Fixes](https://img.shields.io/badge/safe%20fixes-automatic-059669)
+![Shell](https://img.shields.io/badge/runtime-shell-334155)
+
 A [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) that diagnoses why your context window is burning through tokens — and fixes the worst offenders automatically.
 
 ## What it does
@@ -50,15 +56,9 @@ That's it. Claude Code automatically loads skills from `~/.claude/skills/`.
 
 Just ask Claude Code naturally:
 
-```
+```text
 token diagnostics
-```
-
-```
 why am I hitting my context limit?
-```
-
-```
 what's burning through my tokens?
 ```
 
@@ -66,7 +66,7 @@ Claude will run the diagnostic steps in parallel, synthesize a report, and fix w
 
 ## Sample output
 
-```
+```text
 TOKEN DIAGNOSTICS REPORT
 ========================
 
@@ -82,10 +82,6 @@ INDEXING SURFACE:
   After exclusions:   1,178 files
   .claudeignore:      EXISTS ✓
 
-CODEBASE RISK:
-  Files >500 lines:   38 files
-  Largest:            openapi.yaml (4,782), docker-compose.yml (1,505)
-
 TOOL OUTPUT NOISE:
   Docker warnings:    101 per command (~1,515 wasted tokens) ← FIXED
 
@@ -93,13 +89,13 @@ PRIMARY BURN VECTORS:
   [x] Docker compose warnings — 101/command × ~15 tokens each
   [x] 75 untracked files bloating git status
   [ ] .claudeignore present ✓
-  [ ] Memory lean (118 lines) ✓
-  [ ] CLAUDE.md lean (76 lines) ✓
+  [ ] Memory lean ✓
+  [ ] CLAUDE.md lean ✓
 
 FIXES APPLIED:
-  1. docker-compose.yml: 155 bare ${VAR} → ${VAR:-} (warnings: 101 → 0)
-  2. Deleted stale =0.2.36 artifact
-  3. Added cloudflared/creds.json to .gitignore
+  1. docker-compose.yml: 155 bare ${VAR} → ${VAR:-}
+  2. Deleted stale artifact
+  3. Added missing generated files to .gitignore
 ```
 
 ## How Claude Code skills work
