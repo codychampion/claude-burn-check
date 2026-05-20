@@ -1,0 +1,41 @@
+name: validate-skill
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SKILL.md frontmatter
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          skill = Path("SKILL.md")
+          text = skill.read_text(encoding="utf-8")
+
+          if not text.startswith("---\n"):
+              raise SystemExit("SKILL.md must start with YAML frontmatter")
+
+          parts = text.split("---", 2)
+          if len(parts) < 3:
+              raise SystemExit("SKILL.md frontmatter must be closed with ---")
+
+          frontmatter = parts[1]
+          required = {
+              "name:": "name field",
+              "description:": "description field",
+              "name: token-diagnostics": "token-diagnostics skill name",
+          }
+
+          for needle, label in required.items():
+              if needle not in frontmatter:
+                  raise SystemExit(f"Missing {label}")
+
+          print("SKILL.md frontmatter looks valid")
+          PY
