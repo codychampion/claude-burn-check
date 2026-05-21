@@ -1,0 +1,40 @@
+{
+  "name": "claude-burn-check",
+  "version": "0.1.0",
+  "description": "Install and validate the Claude Burn Check token diagnostics skill for Claude Code.",
+  "type": "module",
+  "bin": {
+    "claude-burn-check": "./bin/claude-burn-check.js"
+  },
+  "files": [
+    "SKILL.md",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "validate": "node bin/claude-burn-check.js doctor --repo"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "ai",
+    "tokens",
+    "context-window",
+    "developer-tools",
+    "skill"
+  ],
+  "author": "Cody Champion",
+  "license": "MIT",
+  "homepage": "https://github.com/codychampion/claude-burn-check#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codychampion/claude-burn-check.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codychampion/claude-burn-check/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
