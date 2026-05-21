@@ -5,6 +5,7 @@
 ![Token Diagnostics](https://img.shields.io/badge/focus-token%20diagnostics-111827)
 ![Safe Fixes](https://img.shields.io/badge/safe%20fixes-automatic-059669)
 ![Shell](https://img.shields.io/badge/runtime-shell-334155)
+![npm](https://img.shields.io/badge/npx-installable-cb3837)
 
 Find why Claude Code is burning context, then suggest safe fixes before your session melts down.
 
@@ -24,12 +25,30 @@ Then it ranks the biggest burn vectors and fixes the safe ones automatically.
 
 ## Quick install
 
+Preferred path after npm publishing:
+
+```bash
+npx claude-burn-check install
+npx claude-burn-check doctor
+```
+
+Manual install from a clone:
+
 ```bash
 mkdir -p ~/.claude/skills/token-diagnostics
 cp SKILL.md ~/.claude/skills/token-diagnostics/SKILL.md
 ```
 
 Claude Code automatically loads skills from `~/.claude/skills/`.
+
+## CLI commands
+
+```bash
+npx claude-burn-check install       # Install the Claude Code skill
+npx claude-burn-check doctor        # Check local installation
+npx claude-burn-check print-skill   # Print SKILL.md for manual copy/paste
+npx claude-burn-check uninstall     # Remove the installed skill
+```
 
 ## Run it
 
@@ -113,6 +132,16 @@ FIXES APPLIED:
 | Every session starts bloated | Git status has many untracked/generated files |
 | Good edits suddenly become expensive | Large files are being reread or rewritten |
 | `/compact` helps for a while, then pain returns | History is not the only burn source |
+
+## Publishing notes
+
+This repo is prepared for npm publishing. Prefer npm trusted publishing / provenance from GitHub Actions instead of long-lived npm tokens.
+
+First publish target:
+
+```bash
+npm publish --access public
+```
 
 ## How Claude Code skills work
 
