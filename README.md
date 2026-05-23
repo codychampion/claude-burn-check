@@ -5,15 +5,15 @@
 ![Token Diagnostics](https://img.shields.io/badge/focus-token%20diagnostics-111827)
 ![Safe Fixes](https://img.shields.io/badge/safe%20fixes-automatic-059669)
 ![Shell](https://img.shields.io/badge/runtime-shell-334155)
-![npm](https://img.shields.io/badge/npx-installable-cb3837)
+![npm](https://img.shields.io/badge/npm-package--ready-cb3837)
 
-Find why Claude Code is burning context, then suggest safe fixes before your session melts down.
+Find why Claude Code is burning context, then suggest safe fixes before your session slows down.
 
 Claude Burn Check is a tiny [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) for diagnosing context-window waste: noisy git status, missing `.claudeignore`, oversized memory files, chat history bloat, Docker warning spam, giant file rereads, and other invisible token drains.
 
 ## Why people use it
 
-Claude Code can feel slow or expensive for reasons that are hard to see. The problem is often not the model — it is project noise getting injected over and over.
+Claude Code can feel slow or expensive for reasons that are hard to see. The problem is often not the model; it is project noise getting injected over and over.
 
 This skill gives you a fast report:
 
@@ -25,7 +25,7 @@ Then it ranks the biggest burn vectors and fixes the safe ones automatically.
 
 ## Quick install
 
-Preferred path after npm publishing:
+After npm publishing:
 
 ```bash
 npx claude-burn-check install
@@ -65,11 +65,11 @@ run claude burn check
 
 | # | Burn vector | Typical cost |
 |---|---|---|
-| 1 | System prompt bloat from MCP tools, skills, git status | 10–50k tokens/turn |
+| 1 | System prompt bloat from MCP tools, skills, git status | 10-50k tokens/turn |
 | 2 | Missing `.claudeignore` | Entire repo indexed on searches |
 | 3 | Git status noise from untracked files | Bloats session start and tool context |
 | 4 | Large files reread across turns | Hundreds to thousands of tokens each |
-| 5 | Noisy tool output from Docker/test logs | 1–2k tokens per command |
+| 5 | Noisy tool output from Docker/test logs | 1-2k tokens per command |
 | 6 | Full file rewrites instead of diffs | Scales with file size |
 | 7 | Subagent overhead | Full context injection per agent |
 | 8 | Long conversation history | Accumulates until `/compact` |
@@ -81,7 +81,7 @@ run claude burn check
 Applied automatically:
 
 - Creates `.claudeignore` if missing.
-- Fixes `${VAR}` → `${VAR:-}` in `docker-compose.yml` to suppress variable warnings.
+- Fixes `${VAR}` -> `${VAR:-}` in `docker-compose.yml` to suppress variable warnings.
 
 Asks first:
 
@@ -95,7 +95,7 @@ Never does silently:
 
 ## Example finding
 
-Running this on a real project found **101 “variable is not set” warnings** firing on every `docker compose` command — roughly **1,500 tokens wasted per command**. A one-line Python fix dropped it to zero.
+Running this on a real project found **101 "variable is not set" warnings** firing on every `docker compose` command, roughly **1,500 tokens wasted per command**. A one-line Python fix dropped it to zero.
 
 ## Sample output
 
@@ -108,18 +108,18 @@ SYSTEM PROMPT OVERHEAD:
   Skills:             24 loaded
   Git status:         79 lines + 75 untracked files
   Context files:      ~1,940 tokens
-  Estimated overhead: ~6,000–8,000 tokens/turn
+  Estimated overhead: ~6,000-8,000 tokens/turn
 
 INDEXING SURFACE:
   Total files:        62,389
   After exclusions:   1,178 files
-  .claudeignore:      EXISTS ✓
+  .claudeignore:      EXISTS
 
 TOOL OUTPUT NOISE:
-  Docker warnings:    101 per command (~1,515 wasted tokens) ← FIXED
+  Docker warnings:    101 per command (~1,515 wasted tokens) <- FIXED
 
 FIXES APPLIED:
-  1. docker-compose.yml: 155 bare ${VAR} → ${VAR:-}
+  1. docker-compose.yml: 155 bare ${VAR} -> ${VAR:-}
   2. Added generated files to .gitignore
 ```
 
